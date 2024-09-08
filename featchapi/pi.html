@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>api</title>
+</head>
+<body>
+    <script>
+       function calculatePi(iterations, precision) {
+            let pi = 0;
+            let divisor = 1;
+            
+            for (let i = 0; i < iterations; i++) {
+                pi +=  (i % 2 === 0 ? 1 : -1) / divisor;
+                divisor += 2;
+            }
+            
+            // Przybliżenie pi * 4, następnie ograniczamy liczbę miejsc po przecinku
+            return (pi * 4).toFixed(precision);
+        }
+
+        const iterations = 10000000;
+        const precision = 10; // liczba miejsc po przecinku
+        const piApprox = calculatePi(iterations, precision);
+        console.log(piApprox);   
+    </script>
+</body>
+</html>

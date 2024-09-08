@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>api</title>
+</head>
+<body>
+    <script>
+        async function calculateSHA(text) {
+            // Convert the text to a Uint8Array
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+
+            // Compute the hash
+            const hashBuffer = await crypto.subtle.digest('SHA-384', data);
+
+            // Convert the hash to a hexadecimal string
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+
+            return hashHex;
+        }
+
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Pobieranie parametrów z URL
+        const toCrypt = getQueryParam('toCrypt');
+        console.log(toCrypt);
+        
+        if (toCrypt) {
+            // Wait for the hash calculation to complete and then update the HTML
+            calculateSHA(toCrypt).then(hash => {
+                document.getElementById("sum").innerHTML = hash;
+            }).catch(error => {
+                console.error('Error calculating SHA-386:', error);
+                document.getElementById("sum").innerHTML = 'Error calculating hash';
+            });
+        }
+    </script>
+    <p id="sum"></p>
+</body>
+</html>

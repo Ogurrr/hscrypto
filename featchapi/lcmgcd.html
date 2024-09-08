@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>api</title>
+</head>
+<body>
+    <p id="sum"></p>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function gcd(a, b) {
+                return b === 0 ? a : gcd(b, a % b);
+            }
+
+            function lcm(a, b) {
+                return Math.abs(a * b) / gcd(a, b);
+            }
+
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            // Pobieranie parametrów z URL i konwersja na liczby
+            const num1 = parseInt(getQueryParam('num1'));
+            const num2 = parseInt(getQueryParam('num2'));
+            const method = getQueryParam('method');
+
+            var result;
+            if (method === "lcm") {
+                result = lcm(num1, num2);
+            } else if (method === "gcd") {
+                result = gcd(num1, num2);
+            }
+
+            // Wyświetlenie wyniku na stronie
+            console.log(result);
+            document.getElementById("sum").innerText = result;
+        });
+    </script>
+</body>
+</html>
